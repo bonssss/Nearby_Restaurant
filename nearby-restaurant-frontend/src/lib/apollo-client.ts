@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql', // Replace with your backend URL
+  uri: 'https://nearby-restaurant.onrender.com/graphql', // Replace with your backend URL
   cache: new InMemoryCache(),
 });
 
