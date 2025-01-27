@@ -1,12 +1,11 @@
-// src/types.ts
 export type Restaurant = {
     id: string;
     name: string;
     address: string;
-    openingHours: string;  // assuming openingHours is a single string
+    openingHours: string;  
     latitude: number;
     longitude: number;
-    distance?: number;  // optional property
+    distance?: number;  
   };
   
   export type NearbyRestaurantsResponse = {

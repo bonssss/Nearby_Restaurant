@@ -1,28 +1,33 @@
-'use client';
-import { useQuery } from '@apollo/client';
-import { GET_NEARBY_RESTAURANTS } from '../queries/getNearbyRestaurants';
-import { useEffect, useState } from 'react';
-import dynamic from 'next/dynamic'; // Import dynamic from next
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Restaurant, NearbyRestaurantsResponse } from '../types'; // Import the new type
+"use client";
+import { useQuery } from "@apollo/client";
+import { GET_NEARBY_RESTAURANTS } from "../queries/getNearbyRestaurants";
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Restaurant, NearbyRestaurantsResponse } from "../types"; // Import the new type
 
 // Dynamically import the RestaurantMap component, disabling SSR
-const RestaurantMap = dynamic(() => import('../components/RestaurantMap'), { ssr: false });
+const RestaurantMap = dynamic(() => import("../components/RestaurantMap"), {
+  ssr: false,
+});
 
 export default function Home() {
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
 
-  const { data, loading, error } = useQuery<NearbyRestaurantsResponse>(GET_NEARBY_RESTAURANTS, {
-    variables: {
-      latitude,
-      longitude,
-      radius: 15, // Radius in km
-    },
-    skip: latitude === null || longitude === null,
-  });
+  const { data, loading, error } = useQuery<NearbyRestaurantsResponse>(
+    GET_NEARBY_RESTAURANTS,
+    {
+      variables: {
+        latitude,
+        longitude,
+        radius: 15, // Radius in km
+      },
+      skip: latitude === null || longitude === null,
+    }
+  );
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -32,22 +37,25 @@ export default function Home() {
           setLongitude(position.coords.longitude);
         },
         (err) => {
-          console.error('Error fetching location:', err.message);
-          setLocationError('Unable to fetch location. Showing results near London.');
+          console.error("Error fetching location:", err.message);
+          setLocationError(
+            "Unable to fetch location. Showing results near London."
+          );
           // Fallback location (London)
           setLatitude(51.5074);
           setLongitude(-0.1278);
         }
       );
     } else {
-      setLocationError('Geolocation is not supported by your browser.');
+      setLocationError("Geolocation is not supported by your browser.");
       // Fallback location (London)
       setLatitude(51.5074);
       setLongitude(-0.1278);
     }
   }, []);
 
-  if (loading || latitude === null || longitude === null) return <p>Loading location...</p>;
+  if (loading || latitude === null || longitude === null)
+    return <p>Loading location...</p>;
   if (error) return <p>Error loading restaurants: {error.message}</p>;
 
   const restaurants: Restaurant[] = data?.nearbyRestaurants?.restaurants || [];
@@ -73,7 +81,10 @@ export default function Home() {
             />
             <ul className="mt-4 space-y-2">
               {restaurants.map((restaurant) => (
-                <li key={restaurant.id} className="p-4 border rounded shadow-sm hover:shadow-md">
+                <li
+                  key={restaurant.id}
+                  className="p-4 border rounded shadow-sm hover:shadow-md"
+                >
                   <h2 className="text-lg font-semibold">{restaurant.name}</h2>
                   <p>{restaurant.address}</p>
                   <p className="text-gray-500">{restaurant.distance} km away</p>
@@ -82,7 +93,10 @@ export default function Home() {
             </ul>
           </>
         ) : (
-          <p>No restaurants found within the radius. Try searching in a different area.</p>
+          <p>
+            No restaurants found within the radius. Try searching in a different
+            area.
+          </p>
         )}
       </div>
       <Footer />
