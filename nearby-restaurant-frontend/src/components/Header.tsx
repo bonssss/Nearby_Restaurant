@@ -1,9 +1,10 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
-import { Bars3Icon, ChevronDownIcon, XMarkIcon, PlayCircleIcon, PhoneIcon } from '@heroicons/react/24/outline';
-import { Popover, PopoverButton, PopoverGroup, PopoverPanel, Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
+import { Bars3Icon, PlayCircleIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon, SquaresPlusIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
+import XMarkIcon from '@heroicons/react/24/outline/XMarkIcon';
 
 type Product = {
   name: string;
@@ -38,13 +39,9 @@ const Header = () => {
     <header className="bg-white">
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <img
-              alt=""
-              src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-              className="h-8 w-auto"
-            />
+          <a href="/" className="-m-1.5 p-1.5">
+            <span className="sr-only">NEAR_BY</span>
+            <img alt="Image" src="/image.png" className="h-8 w-auto" />
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -54,28 +51,42 @@ const Header = () => {
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
           >
             <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="size-6" />
+            <Bars3Icon aria-hidden="true" className="h-6 w-6" />
           </button>
         </div>
-        <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-        <a href="#" className="text-sm/6 font-semibold text-gray-900">
+        <div className="hidden lg:flex lg:gap-x-12">
+          <Link href="/about" className="text-sm font-semibold text-gray-900">
             About
-          </a>
-
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
+          </Link>
+          <Link href="#" className="text-sm font-semibold text-gray-900">
             Contact
-          </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-           Service
-          </a>
-        
-        </PopoverGroup>
+          </Link>
+          <Link href="#" className="text-sm font-semibold text-gray-900">
+            Service
+          </Link>
+        </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
+          <Link href="#" className="text-sm font-semibold text-gray-900">
             Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+          </Link>
         </div>
       </nav>
+
+      {mobileMenuOpen && (
+        <div className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-500">
+          <div className="flex justify-end p-4">
+            <button onClick={() => setMobileMenuOpen(false)} className="text-white">
+              <XMarkIcon className="h-6 w-6" />
+            </button>
+          </div>
+          <div className="flex flex-col items-center space-y-4 bg-white p-6 z-10">
+            <Link href="/about" className="text-lg font-semibold text-gray-900">About</Link>
+            <Link href="#" className="text-lg font-semibold text-gray-900">Contact</Link>
+            <Link href="#" className="text-lg font-semibold text-gray-900">Service</Link>
+            <Link href="#" className="text-lg font-semibold text-gray-900">Log in</Link>
+          </div>
+        </div>
+      )}
     </header>
   );
 };
