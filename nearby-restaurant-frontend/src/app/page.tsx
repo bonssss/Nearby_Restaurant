@@ -1,18 +1,21 @@
 'use client';
-
 import { useQuery } from '@apollo/client';
 import { GET_NEARBY_RESTAURANTS } from '../queries/getNearbyRestaurants';
 import { useEffect, useState } from 'react';
-import RestaurantMap from '../components/RestaurantMap';
+import dynamic from 'next/dynamic'; // Import dynamic from next
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { Restaurant, NearbyRestaurantsResponse } from '../types'; // Import the new type
+
+// Dynamically import the RestaurantMap component, disabling SSR
+const RestaurantMap = dynamic(() => import('../components/RestaurantMap'), { ssr: false });
 
 export default function Home() {
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
 
-  const { data, loading, error } = useQuery(GET_NEARBY_RESTAURANTS, {
+  const { data, loading, error } = useQuery<NearbyRestaurantsResponse>(GET_NEARBY_RESTAURANTS, {
     variables: {
       latitude,
       longitude,
@@ -47,12 +50,14 @@ export default function Home() {
   if (loading || latitude === null || longitude === null) return <p>Loading location...</p>;
   if (error) return <p>Error loading restaurants: {error.message}</p>;
 
-  const restaurants = data?.nearbyRestaurants?.restaurants || [];
+  const restaurants: Restaurant[] = data?.nearbyRestaurants?.restaurants || [];
 
   return (
-    <div >
-<div className='z-1000'> <Header/></div>
-     
+    <div>
+      <div className="z-1000">
+        <Header />
+      </div>
+
       <div className="container mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">Nearby Restaurants</h1>
         {locationError && (
@@ -60,22 +65,18 @@ export default function Home() {
         )}
         {restaurants.length > 0 ? (
           <>
+            {/* Render the map */}
             <RestaurantMap
               latitude={latitude}
               longitude={longitude}
               restaurants={restaurants}
             />
             <ul className="mt-4 space-y-2">
-              {restaurants.map((restaurant: any) => (
-                <li
-                  key={restaurant.id}
-                  className="p-4 border rounded shadow-sm hover:shadow-md"
-                >
+              {restaurants.map((restaurant) => (
+                <li key={restaurant.id} className="p-4 border rounded shadow-sm hover:shadow-md">
                   <h2 className="text-lg font-semibold">{restaurant.name}</h2>
                   <p>{restaurant.address}</p>
-                  <p className="text-gray-500">
-                    {restaurant.distance} km away
-                  </p>
+                  <p className="text-gray-500">{restaurant.distance} km away</p>
                 </li>
               ))}
             </ul>

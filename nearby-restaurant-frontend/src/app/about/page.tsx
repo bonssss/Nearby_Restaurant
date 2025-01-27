@@ -21,8 +21,8 @@ const AboutPage = () => {
       <section>
         <h2 className="text-2xl font-semibold mb-4">Our Mission</h2>
         <p className="text-lg">
-          We are dedicated to helping you find the best restaurants around you. Whether you're looking
-          for a cozy cafe, a fine dining experience, or a quick bite, we’ve got you covered.
+          We are dedicated to helping you find the best restaurants around you. Whether you are looking
+          for a cozy cafe, a fine dining experience, or a quick bite, we have got you covered.
         </p>
       </section>
 

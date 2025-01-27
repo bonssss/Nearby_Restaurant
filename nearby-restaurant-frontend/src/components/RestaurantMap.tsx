@@ -1,23 +1,17 @@
-"use client";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+// src/components/RestaurantMap.tsx
+'use client';
+
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import L from 'leaflet';
-
-type Restaurant = {
-  id: string;
-  name: string;
-  address: string;
-  openingHours: string;
-  latitude: number;
-  longitude: number;
-  distance?: number;
-};
+import { Restaurant } from '../types'; // Import the consistent type
 
 type Props = {
   latitude: number;
   longitude: number;
   restaurants: Restaurant[];
 };
+
 const userIcon = L.icon({
   iconUrl: '/user-location.png',  // user location path
   iconSize: [40, 40], 

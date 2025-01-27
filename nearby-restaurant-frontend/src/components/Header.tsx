@@ -1,36 +1,16 @@
 "use client";
 
 import { useState } from 'react';
-import { Bars3Icon, PlayCircleIcon, PhoneIcon } from '@heroicons/react/24/outline';
-import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon, SquaresPlusIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import XMarkIcon from '@heroicons/react/24/outline/XMarkIcon';
+import Image from 'next/image';
 
-type Product = {
-  name: string;
-  description: string;
-  href: string;
-  icon: React.ElementType;
-};
 
-type CallToAction = {
-  name: string;
-  href: string;
-  icon: React.ElementType;
-};
 
-const products: Product[] = [
-  { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
-  { name: 'Engagement', description: 'Speak directly to your customers', href: '#', icon: CursorArrowRaysIcon },
-  { name: 'Security', description: 'Your customers’ data will be safe and secure', href: '#', icon: FingerPrintIcon },
-  { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
-  { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
-];
 
-const callsToAction: CallToAction[] = [
-  { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-  { name: 'Contact sales', href: '#', icon: PhoneIcon },
-];
+
+
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -39,10 +19,11 @@ const Header = () => {
     <header className="bg-white">
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
         <div className="flex lg:flex-1">
-          <a href="/" className="-m-1.5 p-1.5">
+          <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">NEAR_BY</span>
-            <img alt="Image" src="/image.png" className="h-8 w-auto" />
-          </a>
+            <Image src="/image.png" alt="NEAR_BY" width={40} height={42} />
+            {/* <img alt="Image" src="/image.png" className="h-8 w-auto" /> */}
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button
