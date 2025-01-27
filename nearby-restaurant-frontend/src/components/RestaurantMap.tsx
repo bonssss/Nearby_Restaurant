@@ -1,8 +1,7 @@
-'use client';
+"use client";
 
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 type Restaurant = {
   id: string;
@@ -11,6 +10,7 @@ type Restaurant = {
   openingHours: string;
   latitude: number;
   longitude: number;
+  distance?: number;
 };
 
 type Props = {
@@ -19,15 +19,19 @@ type Props = {
   restaurants: Restaurant[];
 };
 
-export default function RestaurantMap({ latitude, longitude, restaurants }: Props) {
+export default function RestaurantMap({
+  latitude,
+  longitude,
+  restaurants,
+}: Props) {
   return (
     <MapContainer
       center={[latitude, longitude]}
       zoom={13}
-      style={{ height: '500px', width: '100%' }}
+      style={{ height: "500px", width: "100%" }}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      {/* User Marker */}
+      {/* User Location Marker */}
       <Marker position={[latitude, longitude]}>
         <Popup>You are here</Popup>
       </Marker>
@@ -44,11 +48,11 @@ export default function RestaurantMap({ latitude, longitude, restaurants }: Prop
             <br />
             {restaurant.openingHours}
             {restaurant.distance && (
-                <>
-                  <br />
-                  {restaurant.distance.toFixed(2)} km away
-                </>
-                )}
+              <>
+                <br />
+                {restaurant.distance.toFixed(2)} km away
+              </>
+            )}
           </Popup>
         </Marker>
       ))}
