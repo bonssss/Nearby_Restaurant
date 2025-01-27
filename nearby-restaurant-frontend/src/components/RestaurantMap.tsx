@@ -1,6 +1,7 @@
 "use client";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import L from 'leaflet';
 
 type Restaurant = {
   id: string;
@@ -17,6 +18,12 @@ type Props = {
   longitude: number;
   restaurants: Restaurant[];
 };
+const userIcon = L.icon({
+  iconUrl: '/user-location.png',  // user location path
+  iconSize: [40, 40], 
+  iconAnchor: [20, 40], // Anchor point of the icon
+  popupAnchor: [0, -40], // Position of the popup
+});
 
 export default function RestaurantMap({
   latitude,
@@ -31,7 +38,7 @@ export default function RestaurantMap({
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       {/* User Location Marker */}
-      <Marker position={[latitude, longitude]}>
+      <Marker position={[latitude, longitude]} icon={userIcon}> 
         <Popup>You are here</Popup>
       </Marker>
       {/* Restaurant Markers */}

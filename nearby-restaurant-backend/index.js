@@ -50,7 +50,7 @@ const resolvers = {
         `;
 
         // Log the restaurants to ensure correct values are being returned
-        console.log("Nearby restaurants:", restaurants);
+        // console.log("Nearby restaurants:", restaurants);
         
         // Return a message if no restaurants are found
         if (restaurants.length === 0) {
