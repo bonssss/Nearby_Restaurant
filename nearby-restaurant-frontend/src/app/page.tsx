@@ -50,8 +50,9 @@ export default function Home() {
   const restaurants = data?.nearbyRestaurants?.restaurants || [];
 
   return (
-    <div>
-      <Header />
+    <div >
+<div className='z-1000'> <Header/></div>
+     
       <div className="container mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">Nearby Restaurants</h1>
         {locationError && (
